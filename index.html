@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+</head>
+<body>
+
+    <div class="message" id="alert"></div>
+    <!-- Don't edit the markup! -->
+
+    <section>
+        <article>
+        <h2>Item One 😇</h2>
+        <p>Lorem ipsum dolor sit amet</p>
+        <button data-action="start">Move to start</button>
+        <button data-action="delete">Delete</button>
+        </article>
+        
+        <article>
+        <h2>Item Two 👿</h2>
+        <p>Lorem ipsum dolor sit amet</p>
+        <button data-action="start">Move to start</button>
+        <button data-action="delete">Delete</button>
+        </article>
+        
+        <article>
+        <h2>Item Three 👻</h2>
+        <p>Lorem ipsum dolor sit amet</p>
+        <button data-action="start">Move to start</button>
+        <button data-action="delete">Delete</button>
+        </article>
+    </section>
+
+    <script>
+
+        var cardCount = 3;
+        var cardHolder = document.getElementsByTagName('section')[0];
+        var allButtons = document.getElementsByTagName('button');
+        var messageBox = document.getElementById('alert');
+        for(var btn of allButtons){
+
+            btn.onclick = function(){
+                if(this.getAttribute('data-action') === 'start'){
+                    moveToStart(this.parentNode);
+                }
+                else
+                    deleteNode(this.parentNode);
+            }
+        }
+
+        function moveToStart(triggerParent){
+
+            if(cardHolder.children[0] === triggerParent){
+                showMessage('Relax...na you carry first!','normal',3000);
+            }
+            else{
+                cardHolder.prepend(triggerParent);
+                showMessage('You moved a card','warning', 700);
+            }
+                
+        }
+
+        function deleteNode(triggerParent){
+            cardHolder.removeChild(triggerParent);
+            cardCount--;
+            cardHolder.className = 'card'+cardCount;
+
+            showMessage('Sad to see that card go for good!', 'danger',3000);
+        }
+
+        function showMessage(message, messageClass, duration){
+            messageBox.classList.add('show', messageClass);
+            messageBox.textContent = message;
+
+            setTimeout(function(){
+                messageBox.classList.remove('show', messageClass);
+            },duration);
+        }
+    </script>
+  
+</body>
+</html>
